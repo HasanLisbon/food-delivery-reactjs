@@ -5,10 +5,29 @@ import Logo from "../assets/img/logo.png";
 import Avatar from "../assets/img/avatar.png";
 
 import { motion } from "framer-motion";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from "../firbase.config";
 
 import { MdShoppingCart } from "react-icons/md";
+import { useStateValue } from "../context/StateProvidder";
+import { actionType } from "../context/reducer";
 
 const Header = () => {
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+  const [{ user }, dispatch] = useStateValue();
+  const login = async () => {
+    const {
+      user: { refreshToken, providerData },
+    } = await signInWithPopup(firebaseAuth, provider);
+
+    dispatch({
+      type: actionType.SET_USER,
+      user: providerData[0],
+    });
+
+    localStorage.setItem("user", JSON.stringify(providerData[0]));
+  };
   return (
     <header className="w-screen fixed z-50 p-6 px-16">
       {/* desktop and tablet */}
@@ -40,12 +59,15 @@ const Header = () => {
               <p className="text-xs text-white font-semibold">2</p>
             </div>
           </div>
-          <motion.img
-            whileTap={{ scale: 0.6 }}
-            src={Avatar}
-            className="w-10 min-w-[40px] h-10 min-h-[40px] shadow-2xl cursor-pointer"
-            alt="userImage"
-          />
+          <div>
+            <motion.img
+              whileTap={{ scale: 0.6 }}
+              src={user ? user.photoURL : Avatar}
+              className="w-10 min-w-[40px] h-10 min-h-[40px] shadow-2xl cursor-pointer rounded-full"
+              alt="userImage"
+              onClick={login}
+            />
+          </div>
         </div>
       </div>
 
