@@ -17,16 +17,18 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
   const [{ user }, dispatch] = useStateValue();
   const login = async () => {
-    const {
-      user: { refreshToken, providerData },
-    } = await signInWithPopup(firebaseAuth, provider);
+    if (!user) {
+      const {
+        user: { refreshToken, providerData },
+      } = await signInWithPopup(firebaseAuth, provider);
 
-    dispatch({
-      type: actionType.SET_USER,
-      user: providerData[0],
-    });
+      dispatch({
+        type: actionType.SET_USER,
+        user: providerData[0],
+      });
 
-    localStorage.setItem("user", JSON.stringify(providerData[0]));
+      localStorage.setItem("user", JSON.stringify(providerData[0]));
+    }
   };
   return (
     <header className="w-screen fixed z-50 p-6 px-16">
@@ -59,7 +61,7 @@ const Header = () => {
               <p className="text-xs text-white font-semibold">2</p>
             </div>
           </div>
-          <div>
+          <div className="relative">
             <motion.img
               whileTap={{ scale: 0.6 }}
               src={user ? user.photoURL : Avatar}
@@ -67,6 +69,10 @@ const Header = () => {
               alt="userImage"
               onClick={login}
             />
+            <div className="flex flex-col bg-gray-50 absolute rounded-lg shadow-xl right-0 top-12 w-40 px-4 py-2">
+              <p>New Item</p>
+              <p>Logout</p>
+            </div>
           </div>
         </div>
       </div>
