@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firbase.config";
 
-import { MdShoppingCart } from "react-icons/md";
+import { MdShoppingCart, MdAdd, MdLogout } from "react-icons/md";
 import { useStateValue } from "../context/StateProvidder";
 import { actionType } from "../context/reducer";
 
@@ -69,9 +69,13 @@ const Header = () => {
               alt="userImage"
               onClick={login}
             />
-            <div className="flex flex-col bg-gray-50 absolute rounded-lg shadow-xl right-0 top-12 w-40 px-4 py-2">
-              <p>New Item</p>
-              <p>Logout</p>
+            <div className="flex flex-col bg-gray-50 absolute rounded-lg shadow-xl right-0 top-12 w-40 ">
+              <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                New Item <MdAdd />
+              </p>
+              <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                Logout <MdLogout />
+              </p>
             </div>
           </div>
         </div>
