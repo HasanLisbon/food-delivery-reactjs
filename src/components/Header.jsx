@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Logo from "../assets/img/logo.png";
@@ -16,6 +16,8 @@ const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
   const [{ user }, dispatch] = useStateValue();
+  const [isMenu, setMenu] = useState(false);
+
   const login = async () => {
     if (!user) {
       const {
@@ -28,6 +30,8 @@ const Header = () => {
       });
 
       localStorage.setItem("user", JSON.stringify(providerData[0]));
+    } else {
+      setMenu(!isMenu);
     }
   };
   return (
@@ -69,14 +73,26 @@ const Header = () => {
               alt="userImage"
               onClick={login}
             />
-            <div className="flex flex-col bg-gray-50 absolute rounded-lg shadow-xl right-0 top-12 w-40 ">
-              <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
-                New Item <MdAdd />
-              </p>
-              <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
-                Logout <MdLogout />
-              </p>
-            </div>
+            {isMenu && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                className="flex flex-col bg-gray-50 absolute rounded-lg shadow-xl right-0 top-12 w-40 "
+              >
+                {user && user.email === "simul.citycollege@gmail.com" && (
+                  <Link to={"/createItem"}>
+                    <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                      New Item <MdAdd />
+                    </p>
+                  </Link>
+                )}
+
+                <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                  Logout <MdLogout />
+                </p>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
