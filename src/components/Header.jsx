@@ -35,6 +35,16 @@ const Header = () => {
       setMenu(!isMenu);
     }
   };
+
+  const logout = () => {
+    setMenu(false);
+    localStorage.clear();
+
+    dispatch({
+      type: actionType.SET_USER,
+      user: null,
+    });
+  };
   return (
     <header className="w-screen fixed z-50 p-3 px-4 md:p-6 md:px-16">
       {/* desktop and tablet */}
@@ -94,7 +104,10 @@ const Header = () => {
                   </Link>
                 )}
 
-                <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                <p
+                  className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out"
+                  onClick={logout}
+                >
                   Logout <MdLogout />
                 </p>
               </motion.div>
@@ -105,6 +118,12 @@ const Header = () => {
 
       {/* mobile */}
       <div className="flex items-center justify-between md:hidden w-full h-full">
+        <div className="relative flex items-center justify-center">
+          <MdShoppingCart className="text-textColor text-2xl  cursor-pointer" />
+          <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+            <p className="text-xs text-white font-semibold">2</p>
+          </div>
+        </div>
         <Link to="/" className="flex items-center gap-2">
           <img src={Logo} alt="log" className="w-8 object-cover" />
           <p className="text-headingColor text-xl font-bold"> City</p>
@@ -152,7 +171,10 @@ const Header = () => {
                 </li>
               </ul>
 
-              <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+              <p
+                className="px-4 py-2 m-2 p-2 shadow-lg bg-gray-200 items-center justify-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-300 transition-all duration-100 ease-in-out"
+                onClick={logout}
+              >
                 Logout <MdLogout />
               </p>
             </motion.div>
