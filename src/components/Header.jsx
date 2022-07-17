@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Logo from "../assets/img/logo.png";
 import Avatar from "../assets/img/avatar.png";
@@ -36,6 +36,8 @@ const Header = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   const logout = () => {
     setMenu(false);
     localStorage.clear();
@@ -44,9 +46,10 @@ const Header = () => {
       type: actionType.SET_USER,
       user: null,
     });
+    navigate("/");
   };
   return (
-    <header className="w-screen fixed z-50 p-3 px-4 md:p-6 md:px-16">
+    <header className="w-screen fixed z-50 p-3 bg-primary px-4 md:p-6 md:px-16">
       {/* desktop and tablet */}
       <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
@@ -98,7 +101,10 @@ const Header = () => {
               >
                 {user && user.email === "simul.citycollege@gmail.com" && (
                   <Link to={"/createItem"}>
-                    <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                    <p
+                      className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out"
+                      onClick={() => setMenu(false)}
+                    >
                       New Item <MdAdd />
                     </p>
                   </Link>
@@ -145,7 +151,10 @@ const Header = () => {
             >
               {user && user.email === "simul.citycollege@gmail.com" && (
                 <Link to={"/createItem"}>
-                  <p className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out">
+                  <p
+                    className="px-4 py-2 items-center flex gap-3 cursor-pointer text-textColor text-base hover:bg-slate-100 transition-all duration-100 ease-in-out"
+                    onClick={() => setMenu(false)}
+                  >
                     New Item <MdAdd />
                   </p>
                 </Link>
@@ -157,16 +166,28 @@ const Header = () => {
                 exit={{ opacity: 0, x: 200 }}
                 className="flex flex-col "
               >
-                <li className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out">
+                <li
+                  className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out"
+                  onClick={() => setMenu(false)}
+                >
                   Home
                 </li>
-                <li className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out">
+                <li
+                  className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out"
+                  onClick={() => setMenu(false)}
+                >
                   Menu
                 </li>
-                <li className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out ">
+                <li
+                  className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out "
+                  onClick={() => setMenu(false)}
+                >
                   About Us
                 </li>
-                <li className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out">
+                <li
+                  className="text-base text-headingColor hover:bg-slate-100 px-4 py-2 transition-all duration-100 ease-in-out"
+                  onClick={() => setMenu(false)}
+                >
                   Service
                 </li>
               </ul>

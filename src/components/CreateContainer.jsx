@@ -1,7 +1,11 @@
 import React from "react";
 
 const CreateContainer = () => {
-  return <div>CreateContainer</div>;
+  return (
+    <div className="w-full h-auto">
+      <div></div>
+    </div>
+  );
 };
 
 export default CreateContainer;
